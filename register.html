@@ -10,11 +10,14 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">AgroConnect</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="about.html">À propos</a></li>
-                <li><a href="services.html">Services</a></li>
+            <a href="index.html" class="logo">AgroConnect</a>
+            <div class="burger-menu" onclick="toggleMenu()">
+                <i class='bx bx-menu'></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class='bx bx-home'></i> Accueil</a></li>
+                <li><a href="about.html"><i class='bx bx-info-circle'></i> À propos</a></li>
+                <li><a href="services.html"><i class='bx bx-briefcase'></i> Services</a></li>
                 <li><a href="register.html" class="btn btn-primary">S'inscrire</a></li>
             </ul>
         </div>
@@ -29,15 +32,15 @@
                 
                 <div class="role-selector">
                     <div class="role-option" onclick="selectRole('producer')">
-                        <div class="role-icon">👨‍🌾</div>
+                        <div class="role-icon"><i class='bx bx-leaf'></i></div>
                         <h4>Producteur</h4>
                     </div>
                     <div class="role-option" onclick="selectRole('restaurant')">
-                        <div class="role-icon">🍽️</div>
+                        <div class="role-icon"><i class='bx bx-restaurant'></i></div>
                         <h4>Restaurant</h4>
                     </div>
                     <div class="role-option" onclick="selectRole('client')">
-                        <div class="role-icon">👤</div>
+                        <div class="role-icon"><i class='bx bx-user'></i></div>
                         <h4>Client</h4>
                     </div>
                 </div>
@@ -77,8 +80,9 @@
                         <textarea id="producerDescription" rows="4"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Photo ou logo (URL)</label>
-                        <input type="text" id="producerImage" placeholder="https://...">
+                        <label>Photo ou logo *</label>
+                        <input type="file" id="producerImage" accept="image/*" multiple required>
+                        <div id="producerImagePreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
                         <label>Mot de passe *</label>
@@ -131,8 +135,9 @@
                         <textarea id="restaurantDescription" rows="4"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Logo ou image (URL)</label>
-                        <input type="text" id="restaurantImage" placeholder="https://...">
+                        <label>Logo ou image *</label>
+                        <input type="file" id="restaurantImage" accept="image/*" multiple required>
+                        <div id="restaurantImagePreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 10px;"></div>
                     </div>
                     <div class="form-group">
                         <label>Mot de passe *</label>
@@ -207,9 +212,9 @@
                     <h3>AgroConnect</h3>
                     <p style="color: var(--text-gray);">La marketplace qui connecte toute la chaîne agroalimentaire.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">📘</a>
-                        <a href="#" aria-label="Instagram">📷</a>
-                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Facebook"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
                     </div>
                 </div>
                 <div class="footer-section">

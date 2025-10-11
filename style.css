@@ -761,3 +761,102 @@ footer {
     margin-bottom: 1rem;
     color: var(--white);
 }
+
+/* Menu Burger Responsive */
+.burger-menu {
+    display: none;
+    font-size: 2rem;
+    color: var(--white);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.burger-menu:hover {
+    color: var(--primary-green);
+}
+
+/* Logo cliquable avec effet */
+.logo {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    color: var(--primary-green);
+}
+
+/* Icônes dans les nav-links */
+.nav-links i {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Transitions fade-in/fade-out pour les pages */
+body {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.page-transition {
+    animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Responsive Menu Burger */
+@media (max-width: 992px) {
+    .burger-menu {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        background-color: var(--dark-gray);
+        flex-direction: column;
+        width: 280px;
+        height: calc(100vh - 70px);
+        padding: 2rem;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+        transition: right 0.4s ease;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+    
+    .nav-links li {
+        width: 100%;
+    }
+    
+    .nav-links a {
+        display: block;
+        padding: 0.8rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        background-color: var(--light-gray);
+        transform: translateX(10px);
+    }
+}

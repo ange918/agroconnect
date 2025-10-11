@@ -37,9 +37,59 @@ function selectRole(role) {
     }
 }
 
+// Fonction pour convertir les images en base64
+function handleImagePreview(inputId, previewId, imagesArray) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    
+    if (input) {
+        input.addEventListener('change', function(e) {
+            preview.innerHTML = '';
+            imagesArray.length = 0;
+            
+            const files = Array.from(e.target.files);
+            
+            if (files.length === 0) {
+                return;
+            }
+            
+            files.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imagesArray.push(event.target.result);
+                    
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.width = '100%';
+                    img.style.height = '100px';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '10px';
+                    img.style.border = '2px solid var(--primary-green)';
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    }
+}
+
+// Tableaux pour stocker les images
+let producerImages = [];
+let restaurantImages = [];
+
+// Initialiser les aperçus d'images
+handleImagePreview('producerImage', 'producerImagePreview', producerImages);
+handleImagePreview('restaurantImage', 'restaurantImagePreview', restaurantImages);
+
 if (document.getElementById('producerForm')) {
     document.getElementById('producerForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Validation des images
+        if (producerImages.length === 0) {
+            showToast('Veuillez importer au moins une image avant de continuer.');
+            return;
+        }
         
         const subscriptionData = document.getElementById('producerSubscription').value.split('|');
         const userData = {
@@ -51,7 +101,8 @@ if (document.getElementById('producerForm')) {
             email: document.getElementById('producerEmail').value,
             phone: document.getElementById('producerPhone').value,
             description: document.getElementById('producerDescription').value,
-            image: document.getElementById('producerImage').value || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(document.getElementById('producerName').value) + '&background=1DB954&color=fff',
+            images: producerImages,
+            image: producerImages[0],
             password: document.getElementById('producerPassword').value,
             subscription: {
                 price: parseInt(subscriptionData[0]),
@@ -74,6 +125,12 @@ if (document.getElementById('restaurantForm')) {
     document.getElementById('restaurantForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
+        // Validation des images
+        if (restaurantImages.length === 0) {
+            showToast('Veuillez importer au moins une image avant de continuer.');
+            return;
+        }
+        
         const subscriptionData = document.getElementById('restaurantSubscription').value.split('|');
         const userData = {
             id: Date.now(),
@@ -84,7 +141,8 @@ if (document.getElementById('restaurantForm')) {
             email: document.getElementById('restaurantEmail').value,
             phone: document.getElementById('restaurantPhone').value,
             description: document.getElementById('restaurantDescription').value,
-            image: document.getElementById('restaurantImage').value || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(document.getElementById('restaurantName').value) + '&background=1DB954&color=fff',
+            images: restaurantImages,
+            image: restaurantImages[0],
             password: document.getElementById('restaurantPassword').value,
             subscription: {
                 price: parseInt(subscriptionData[0]),
@@ -592,3 +650,35 @@ if (document.querySelector('.stat-number')) {
 }
 
 updateCartCount();
+
+// Menu Burger Toggle
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+}
+
+// Fermer le menu en cliquant en dehors
+document.addEventListener('click', function(event) {
+    const navLinks = document.getElementById('navLinks');
+    const burgerMenu = document.querySelector('.burger-menu');
+    
+    if (navLinks && burgerMenu && navLinks.classList.contains('active')) {
+        if (!navLinks.contains(event.target) && !burgerMenu.contains(event.target)) {
+            navLinks.classList.remove('active');
+        }
+    }
+});
+
+// Transitions fade-in/fade-out entre pages
+document.querySelectorAll('a[href]:not([href^="#"]):not([onclick])').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && !href.startsWith('#') && !this.hasAttribute('onclick')) {
+            e.preventDefault();
+            document.body.classList.add('page-transition');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+    });
+});

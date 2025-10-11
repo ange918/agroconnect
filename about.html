@@ -10,12 +10,15 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">AgroConnect</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="about.html">À propos</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="register.html?action=login">Connexion</a></li>
+            <a href="index.html" class="logo">AgroConnect</a>
+            <div class="burger-menu" onclick="toggleMenu()">
+                <i class='bx bx-menu'></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class='bx bx-home'></i> Accueil</a></li>
+                <li><a href="about.html"><i class='bx bx-info-circle'></i> À propos</a></li>
+                <li><a href="services.html"><i class='bx bx-briefcase'></i> Services</a></li>
+                <li><a href="register.html?action=login"><i class='bx bx-user'></i> Connexion</a></li>
                 <li><a href="register.html" class="btn btn-primary">S'inscrire</a></li>
             </ul>
         </div>
@@ -47,17 +50,17 @@
             <h2 class="section-title">Notre Vision</h2>
             <div class="cards-grid">
                 <div class="card scroll-reveal">
-                    <div class="card-icon">🌍</div>
+                    <div class="card-icon"><i class='bx bx-world'></i></div>
                     <h3>Durabilité</h3>
                     <p>Promouvoir une agriculture durable et respectueuse de l'environnement en favorisant les circuits courts.</p>
                 </div>
                 <div class="card scroll-reveal">
-                    <div class="card-icon">🤝</div>
+                    <div class="card-icon"><i class='bx bx-group'></i></div>
                     <h3>Collaboration</h3>
                     <p>Créer une communauté solide où producteurs, restaurateurs et consommateurs collaborent pour un avenir meilleur.</p>
                 </div>
                 <div class="card scroll-reveal">
-                    <div class="card-icon">💡</div>
+                    <div class="card-icon"><i class='bx bx-bulb'></i></div>
                     <h3>Innovation</h3>
                     <p>Utiliser la technologie pour simplifier et améliorer l'accès aux produits locaux de qualité.</p>
                 </div>
@@ -131,9 +134,9 @@
                     <h3>AgroConnect</h3>
                     <p style="color: var(--text-gray);">La marketplace qui connecte toute la chaîne agroalimentaire.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">📘</a>
-                        <a href="#" aria-label="Instagram">📷</a>
-                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Facebook"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
                     </div>
                 </div>
                 <div class="footer-section">

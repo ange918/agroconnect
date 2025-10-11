@@ -10,10 +10,13 @@
 <body>
     <nav>
         <div class="nav-container">
-            <div class="logo">AgroConnect</div>
-            <ul class="nav-links">
-                <li><a href="dashboard.html">Tableau de bord</a></li>
-                <li><a href="cart.html">Panier <span id="cartCount" style="background: var(--primary-green); padding: 2px 8px; border-radius: 50%; font-size: 0.8rem;">0</span></a></li>
+            <a href="index.html" class="logo">AgroConnect</a>
+            <div class="burger-menu" onclick="toggleMenu()">
+                <i class='bx bx-menu'></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="dashboard.html"><i class='bx bx-grid-alt'></i> Tableau de bord</a></li>
+                <li><a href="cart.html"><i class='bx bx-cart'></i> Panier <span id="cartCount" style="background: var(--primary-green); padding: 2px 8px; border-radius: 50%; font-size: 0.8rem;">0</span></a></li>
                 <li><a href="#" onclick="logout()" class="btn btn-secondary">Déconnexion</a></li>
             </ul>
         </div>
@@ -67,9 +70,9 @@
                     <h3>AgroConnect</h3>
                     <p style="color: var(--text-gray);">La marketplace qui connecte toute la chaîne agroalimentaire.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">📘</a>
-                        <a href="#" aria-label="Instagram">📷</a>
-                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Facebook"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
