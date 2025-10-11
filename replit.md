@@ -6,6 +6,43 @@ AgroConnect is a French-language agricultural marketplace web application that c
 
 The application is built as a static website using vanilla HTML, CSS, and JavaScript with localStorage for data persistence. It features a modern, dark-themed design inspired by Spotify's aesthetic, with smooth animations and a professional user interface.
 
+## Recent Changes (October 11, 2025)
+
+### UI/UX Improvements
+1. **Boxicons Integration** - Remplacé tous les emojis par des icônes Boxicons professionnelles dans :
+   - Navigation (home, info, briefcase, user, cart, grid icons)
+   - Cartes de fonctionnalités (leaf, bolt, shield, car, etc.)
+   - Sélecteurs de rôle (leaf pour producteur, restaurant, user pour client)
+   - Réseaux sociaux (Facebook, Instagram, LinkedIn)
+
+2. **Importation d'Images Locale**
+   - Ajout de champs `<input type="file">` pour producteurs, restaurants et produits
+   - Aperçu visuel des images sélectionnées avant validation
+   - Conversion automatique en base64 pour stockage dans localStorage
+   - **Validation obligatoire** : impossible de s'inscrire (producteur/restaurant) ou publier un produit sans au moins une image
+   - Message d'erreur clair si tentative de soumission sans image
+
+3. **Menu Burger Responsive**
+   - Menu burger visible sur écrans < 992px avec icône Boxicons 'bx-menu'
+   - Animation slide-in/slide-out fluide depuis la droite
+   - Fermeture automatique en cliquant en dehors du menu
+   - Styles adaptés pour mobile avec navigation verticale
+
+4. **Logo Cliquable**
+   - Logo "AgroConnect" transformé en lien vers l'accueil sur toutes les pages
+   - Effet hover avec scale et changement de couleur
+
+5. **Transitions de Pages**
+   - Effet fade-in au chargement de chaque page (0.5s)
+   - Effet fade-out lors de navigation (0.3s)
+   - JavaScript automatique pour tous les liens internes
+   - Exclusion des liens # , mailto:, et onclick
+
+### Technical Implementation
+- **CSS** : Animations keyframes (fadeIn/fadeOut), media queries responsive
+- **JavaScript** : Fonctions toggleMenu(), initPageTransitions(), handleImagePreview()
+- **HTML** : Markup burger-menu, inputs file avec aperçu, icônes Boxicons intégrées
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
