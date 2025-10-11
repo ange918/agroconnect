@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - AgroConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AgroConnect</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="about.html">À propos</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="register.html?action=login">Connexion</a></li>
+                <li><a href="register.html" class="btn btn-primary">S'inscrire</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" style="height: 50vh; background-image: linear-gradient(rgba(18, 18, 18, 0.7), rgba(18, 18, 18, 0.7)), url('images/about.jpg');">
+        <div class="container">
+            <div class="hero-content">
+                <h1>À propos d'AgroConnect</h1>
+                <p>Notre mission : révolutionner la chaîne agroalimentaire</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Notre Histoire</h2>
+            <p style="max-width: 800px; margin: 0 auto; color: var(--text-gray); text-align: center; line-height: 1.8;">
+                AgroConnect est née d'une vision simple mais ambitieuse : créer un pont direct entre les producteurs locaux, 
+                les restaurateurs passionnés et les consommateurs soucieux de la qualité de leur alimentation. 
+                En éliminant les intermédiaires inutiles, nous permettons à chacun de bénéficier de produits frais, 
+                locaux et à des prix justes.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: var(--dark-gray);">
+        <div class="container">
+            <h2 class="section-title">Notre Vision</h2>
+            <div class="cards-grid">
+                <div class="card scroll-reveal">
+                    <div class="card-icon">🌍</div>
+                    <h3>Durabilité</h3>
+                    <p>Promouvoir une agriculture durable et respectueuse de l'environnement en favorisant les circuits courts.</p>
+                </div>
+                <div class="card scroll-reveal">
+                    <div class="card-icon">🤝</div>
+                    <h3>Collaboration</h3>
+                    <p>Créer une communauté solide où producteurs, restaurateurs et consommateurs collaborent pour un avenir meilleur.</p>
+                </div>
+                <div class="card scroll-reveal">
+                    <div class="card-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>Utiliser la technologie pour simplifier et améliorer l'accès aux produits locaux de qualité.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Nos Chiffres</h2>
+            <div class="stats-grid">
+                <div class="stat-card scroll-reveal">
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label">Producteurs inscrits</div>
+                </div>
+                <div class="stat-card scroll-reveal">
+                    <div class="stat-number" data-target="300">0</div>
+                    <div class="stat-label">Restaurants partenaires</div>
+                </div>
+                <div class="stat-card scroll-reveal">
+                    <div class="stat-number" data-target="2000">0</div>
+                    <div class="stat-label">Commandes réalisées</div>
+                </div>
+                <div class="stat-card scroll-reveal">
+                    <div class="stat-number" data-target="25">0</div>
+                    <div class="stat-label">Villes connectées</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: var(--dark-gray);">
+        <div class="container">
+            <h2 class="section-title">Questions Fréquentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Quelle est la mission d'AgroConnect ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Notre mission est de créer des connexions directes entre producteurs, restaurateurs et consommateurs pour promouvoir une alimentation locale, durable et de qualité.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Comment garantissez-vous la qualité des produits ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Tous nos producteurs sont vérifiés et doivent respecter nos standards de qualité. Nous encourageons également les avis clients pour maintenir la transparence.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Dans quelles régions êtes-vous présents ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Nous sommes actuellement présents dans 25 villes à travers la France et continuons notre expansion pour couvrir de nouvelles régions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AgroConnect</h3>
+                    <p style="color: var(--text-gray);">La marketplace qui connecte toute la chaîne agroalimentaire.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="register.html">S'inscrire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">contact@agroconnect.fr</a></li>
+                        <li><a href="#">+33 1 23 45 67 89</a></li>
+                        <li><a href="#">Paris, France</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 AgroConnect – Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

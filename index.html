@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroConnect - Relions producteurs, restaurateurs et consommateurs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AgroConnect</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="about.html">À propos</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="register.html?action=login">Connexion</a></li>
+                <li><a href="register.html" class="btn btn-primary">S'inscrire</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AgroConnect – Relions producteurs, restaurateurs et consommateurs.</h1>
+                <p>La première marketplace qui connecte toute la chaîne agroalimentaire.</p>
+                <div class="hero-buttons">
+                    <a href="about.html" class="btn btn-primary">Découvrir</a>
+                    <a href="register.html" class="btn btn-secondary">Créer un compte</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Pourquoi nous choisir</h2>
+            <div class="cards-grid">
+                <div class="card scroll-reveal">
+                    <div class="card-icon">🌱</div>
+                    <h3>Produits locaux et bio</h3>
+                    <p>Accédez directement aux meilleurs produits locaux et biologiques de votre région.</p>
+                </div>
+                <div class="card scroll-reveal">
+                    <div class="card-icon">⚡</div>
+                    <h3>Commandes rapides</h3>
+                    <p>Système de commande simplifié pour gagner du temps et optimiser vos achats.</p>
+                </div>
+                <div class="card scroll-reveal">
+                    <div class="card-icon">🤝</div>
+                    <h3>Confiance garantie</h3>
+                    <p>Plateforme sécurisée avec des producteurs et restaurateurs vérifiés.</p>
+                </div>
+                <div class="card scroll-reveal">
+                    <div class="card-icon">🚚</div>
+                    <h3>Livraison simplifiée</h3>
+                    <p>Options de livraison flexibles adaptées à vos besoins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="about-preview">
+                <div class="scroll-reveal">
+                    <img src="images/about.jpg" alt="À propos" class="about-image">
+                </div>
+                <div class="scroll-reveal">
+                    <h2 class="section-title" style="text-align: left;">Notre Mission</h2>
+                    <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
+                        AgroConnect a été créée avec une vision simple mais puissante : révolutionner la chaîne agroalimentaire en créant des connexions directes entre producteurs, restaurateurs et consommateurs.
+                    </p>
+                    <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
+                        Nous croyons en un système alimentaire plus transparent, plus durable et plus équitable pour tous les acteurs de la chaîne.
+                    </p>
+                    <a href="about.html" class="btn btn-primary">En savoir plus</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">Témoignages</h2>
+            <div class="cards-grid">
+                <div class="testimonial-card scroll-reveal">
+                    <img src="https://ui-avatars.com/api/?name=Marie+Dubois&background=1DB954&color=fff" alt="Marie Dubois">
+                    <p>"Grâce à AgroConnect, j'ai pu développer mon activité et atteindre directement des restaurateurs de qualité. Une plateforme indispensable !"</p>
+                    <h4>Marie Dubois</h4>
+                    <span style="color: var(--text-gray); font-size: 0.9rem;">Productrice de légumes bio</span>
+                </div>
+                <div class="testimonial-card scroll-reveal">
+                    <img src="https://ui-avatars.com/api/?name=Jean+Martin&background=1DB954&color=fff" alt="Jean Martin">
+                    <p>"Trouver des produits locaux de qualité n'a jamais été aussi simple. AgroConnect a transformé mon approvisionnement."</p>
+                    <h4>Jean Martin</h4>
+                    <span style="color: var(--text-gray); font-size: 0.9rem;">Chef restaurateur</span>
+                </div>
+                <div class="testimonial-card scroll-reveal">
+                    <img src="https://ui-avatars.com/api/?name=Sophie+Laurent&background=1DB954&color=fff" alt="Sophie Laurent">
+                    <p>"Je peux enfin acheter directement aux producteurs de ma région. Les produits sont frais et la plateforme est très facile à utiliser."</p>
+                    <h4>Sophie Laurent</h4>
+                    <span style="color: var(--text-gray); font-size: 0.9rem;">Cliente particulière</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Questions Fréquentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Comment devenir producteur ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Il suffit de créer un compte producteur via notre page d'inscription. Remplissez vos informations, décrivez vos produits et commencez à vendre !
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Comment passer commande ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Créez un compte client, parcourez les produits disponibles, ajoutez-les à votre panier et validez votre commande. C'est aussi simple que ça !
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Puis-je vendre en tant que restaurant ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Oui ! Les restaurants peuvent à la fois acheter des produits auprès des producteurs et vendre leurs propres créations sur la plateforme.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Comment fonctionne la livraison ?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Chaque producteur ou restaurant définit ses options de livraison. Vous pouvez choisir entre la livraison à domicile ou le retrait sur place selon les disponibilités.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AgroConnect</h3>
+                    <p style="color: var(--text-gray);">La marketplace qui connecte toute la chaîne agroalimentaire.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="register.html">S'inscrire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">contact@agroconnect.fr</a></li>
+                        <li><a href="#">+33 1 23 45 67 89</a></li>
+                        <li><a href="#">Paris, France</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 AgroConnect – Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

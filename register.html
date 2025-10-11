@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - AgroConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AgroConnect</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="about.html">À propos</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="register.html" class="btn btn-primary">S'inscrire</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Créer un compte</h2>
+            
+            <div class="form-container">
+                <h3 style="text-align: center; margin-bottom: 2rem;">Choisissez votre rôle</h3>
+                
+                <div class="role-selector">
+                    <div class="role-option" onclick="selectRole('producer')">
+                        <div class="role-icon">👨‍🌾</div>
+                        <h4>Producteur</h4>
+                    </div>
+                    <div class="role-option" onclick="selectRole('restaurant')">
+                        <div class="role-icon">🍽️</div>
+                        <h4>Restaurant</h4>
+                    </div>
+                    <div class="role-option" onclick="selectRole('client')">
+                        <div class="role-icon">👤</div>
+                        <h4>Client</h4>
+                    </div>
+                </div>
+
+                <form id="producerForm" class="hidden">
+                    <h3 style="margin-bottom: 1.5rem;">Inscription Producteur</h3>
+                    <div class="form-group">
+                        <label>Nom complet ou entreprise *</label>
+                        <input type="text" id="producerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Type de production *</label>
+                        <select id="productionType" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="légumes">Légumes</option>
+                            <option value="viande">Viande</option>
+                            <option value="produits laitiers">Produits laitiers</option>
+                            <option value="céréales">Céréales</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Localisation *</label>
+                        <input type="text" id="producerLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="producerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" id="producerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="producerDescription" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Photo ou logo (URL)</label>
+                        <input type="text" id="producerImage" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe *</label>
+                        <input type="password" id="producerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">S'inscrire</button>
+                </form>
+
+                <form id="restaurantForm" class="hidden">
+                    <h3 style="margin-bottom: 1.5rem;">Inscription Restaurant</h3>
+                    <div class="form-group">
+                        <label>Nom du restaurant *</label>
+                        <input type="text" id="restaurantName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Spécialité *</label>
+                        <select id="restaurantSpecialty" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="française">Cuisine française</option>
+                            <option value="italienne">Cuisine italienne</option>
+                            <option value="asiatique">Cuisine asiatique</option>
+                            <option value="végétarienne">Cuisine végétarienne</option>
+                            <option value="fusion">Cuisine fusion</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Localisation *</label>
+                        <input type="text" id="restaurantLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="restaurantEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" id="restaurantPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="restaurantDescription" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Logo ou image (URL)</label>
+                        <input type="text" id="restaurantImage" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe *</label>
+                        <input type="password" id="restaurantPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">S'inscrire</button>
+                </form>
+
+                <form id="clientForm" class="hidden">
+                    <h3 style="margin-bottom: 1.5rem;">Inscription Client</h3>
+                    <div class="form-group">
+                        <label>Nom complet *</label>
+                        <input type="text" id="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse *</label>
+                        <input type="text" id="clientAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="clientEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" id="clientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe *</label>
+                        <input type="password" id="clientPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">S'inscrire</button>
+                </form>
+
+                <p style="text-align: center; margin-top: 1.5rem; color: var(--text-gray);">
+                    Vous avez déjà un compte ? <a href="#" onclick="showLoginModal()" style="color: var(--primary-green);">Se connecter</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+            <h2 style="margin-bottom: 1.5rem;">Connexion</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AgroConnect</h3>
+                    <p style="color: var(--text-gray);">La marketplace qui connecte toute la chaîne agroalimentaire.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="register.html">S'inscrire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">contact@agroconnect.fr</a></li>
+                        <li><a href="#">+33 1 23 45 67 89</a></li>
+                        <li><a href="#">Paris, France</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 AgroConnect – Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('action') === 'login') {
+            showLoginModal();
+        }
+    </script>
+</body>
+</html>
