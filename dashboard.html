@@ -67,8 +67,9 @@
                     <input type="text" id="productName" required>
                 </div>
                 <div class="form-group">
-                    <label>Image (URL)</label>
-                    <input type="text" id="productImage" placeholder="https://...">
+                    <label>Images du produit (max 5)</label>
+                    <input type="file" id="productImages" accept="image/*" multiple>
+                    <div id="imagePreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 10px;"></div>
                 </div>
                 <div class="form-group">
                     <label>Description *</label>
@@ -91,8 +92,8 @@
                     <input type="text" id="productQuantity" required placeholder="ex: 10 kg, 50 unités">
                 </div>
                 <div class="form-group">
-                    <label>Prix (€) *</label>
-                    <input type="number" id="productPrice" step="0.01" required>
+                    <label>Prix (CFA) *</label>
+                    <input type="number" id="productPrice" step="1" required>
                 </div>
                 <div class="form-group">
                     <label>Localisation *</label>

@@ -41,6 +41,7 @@ if (document.getElementById('producerForm')) {
     document.getElementById('producerForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
+        const subscriptionData = document.getElementById('producerSubscription').value.split('|');
         const userData = {
             id: Date.now(),
             role: 'producer',
@@ -51,7 +52,12 @@ if (document.getElementById('producerForm')) {
             phone: document.getElementById('producerPhone').value,
             description: document.getElementById('producerDescription').value,
             image: document.getElementById('producerImage').value || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(document.getElementById('producerName').value) + '&background=1DB954&color=fff',
-            password: document.getElementById('producerPassword').value
+            password: document.getElementById('producerPassword').value,
+            subscription: {
+                price: parseInt(subscriptionData[0]),
+                duration: parseInt(subscriptionData[1]),
+                startDate: new Date().toISOString()
+            }
         };
         
         let users = JSON.parse(localStorage.getItem('users')) || [];
@@ -68,6 +74,7 @@ if (document.getElementById('restaurantForm')) {
     document.getElementById('restaurantForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
+        const subscriptionData = document.getElementById('restaurantSubscription').value.split('|');
         const userData = {
             id: Date.now(),
             role: 'restaurant',
@@ -78,7 +85,12 @@ if (document.getElementById('restaurantForm')) {
             phone: document.getElementById('restaurantPhone').value,
             description: document.getElementById('restaurantDescription').value,
             image: document.getElementById('restaurantImage').value || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(document.getElementById('restaurantName').value) + '&background=1DB954&color=fff',
-            password: document.getElementById('restaurantPassword').value
+            password: document.getElementById('restaurantPassword').value,
+            subscription: {
+                price: parseInt(subscriptionData[0]),
+                duration: parseInt(subscriptionData[1]),
+                startDate: new Date().toISOString()
+            }
         };
         
         let users = JSON.parse(localStorage.getItem('users')) || [];
@@ -173,31 +185,89 @@ function showProductModal() {
 function closeProductModal() {
     document.getElementById('productModal').classList.remove('show');
     document.getElementById('productForm').reset();
+    document.getElementById('imagePreview').innerHTML = '';
+}
+
+if (document.getElementById('productImages')) {
+    document.getElementById('productImages').addEventListener('change', function(e) {
+        const files = Array.from(e.target.files).slice(0, 5);
+        const preview = document.getElementById('imagePreview');
+        preview.innerHTML = '';
+        
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.style.width = '100%';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '10px';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
 }
 
 if (document.getElementById('productForm')) {
     document.getElementById('productForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const product = {
-            id: Date.now(),
-            sellerId: currentUser.id,
-            sellerName: currentUser.name,
-            name: document.getElementById('productName').value,
-            image: document.getElementById('productImage').value || 'images/product-sample.jpg',
-            description: document.getElementById('productDescription').value,
-            category: document.getElementById('productCategory').value,
-            quantity: document.getElementById('productQuantity').value,
-            price: parseFloat(document.getElementById('productPrice').value),
-            location: document.getElementById('productLocation').value
-        };
+        const fileInput = document.getElementById('productImages');
+        const files = Array.from(fileInput.files).slice(0, 5);
         
-        allProducts.push(product);
-        localStorage.setItem('allProducts', JSON.stringify(allProducts));
-        
-        showToast('Produit publié avec succès !');
-        closeProductModal();
-        loadMyProducts();
+        if (files.length === 0) {
+            const product = {
+                id: Date.now(),
+                sellerId: currentUser.id,
+                sellerName: currentUser.name,
+                sellerPhone: currentUser.phone,
+                name: document.getElementById('productName').value,
+                images: ['images/product-sample.jpg'],
+                description: document.getElementById('productDescription').value,
+                category: document.getElementById('productCategory').value,
+                quantity: document.getElementById('productQuantity').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                location: document.getElementById('productLocation').value
+            };
+            
+            allProducts.push(product);
+            localStorage.setItem('allProducts', JSON.stringify(allProducts));
+            showToast('Produit publié avec succès !');
+            closeProductModal();
+            loadMyProducts();
+        } else {
+            const imagePromises = files.map(file => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+            });
+            
+            Promise.all(imagePromises).then(images => {
+                const product = {
+                    id: Date.now(),
+                    sellerId: currentUser.id,
+                    sellerName: currentUser.name,
+                    sellerPhone: currentUser.phone,
+                    name: document.getElementById('productName').value,
+                    images: images,
+                    description: document.getElementById('productDescription').value,
+                    category: document.getElementById('productCategory').value,
+                    quantity: document.getElementById('productQuantity').value,
+                    price: parseFloat(document.getElementById('productPrice').value),
+                    location: document.getElementById('productLocation').value
+                };
+                
+                allProducts.push(product);
+                localStorage.setItem('allProducts', JSON.stringify(allProducts));
+                showToast('Produit publié avec succès !');
+                closeProductModal();
+                loadMyProducts();
+            });
+        }
     });
 }
 
@@ -210,11 +280,11 @@ function loadMyProducts() {
     } else {
         container.innerHTML = myProducts.map(product => `
             <div class="product-card">
-                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='images/product-sample.jpg'">
+                <img src="${product.images ? product.images[0] : (product.image || 'images/product-sample.jpg')}" alt="${product.name}" class="product-image" onerror="this.src='images/product-sample.jpg'">
                 <div class="product-info">
                     <h3>${product.name}</h3>
                     <p style="color: var(--text-gray); margin-bottom: 0.5rem;">${product.description}</p>
-                    <div class="product-price">${product.price.toFixed(2)} €</div>
+                    <div class="product-price">${product.price.toFixed(0)} CFA</div>
                     <div class="product-location">📍 ${product.location}</div>
                     <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
                         <button onclick="deleteProduct(${product.id})" class="btn btn-secondary" style="flex: 1; padding: 0.5rem;">Supprimer</button>
@@ -254,11 +324,11 @@ function displayProducts(products) {
     
     container.innerHTML = products.map(product => `
         <div class="product-card" onclick="viewProduct(${product.id})">
-            <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='images/product-sample.jpg'">
+            <img src="${product.images ? product.images[0] : (product.image || 'images/product-sample.jpg')}" alt="${product.name}" class="product-image" onerror="this.src='images/product-sample.jpg'">
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p style="color: var(--text-gray); margin-bottom: 0.5rem;">${product.description.substring(0, 80)}...</p>
-                <div class="product-price">${product.price.toFixed(2)} €</div>
+                <div class="product-price">${product.price.toFixed(0)} CFA</div>
                 <div class="product-location">📍 ${product.location}</div>
                 <button onclick="event.stopPropagation(); addToCart(${product.id})" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
                     Ajouter au panier
@@ -298,12 +368,13 @@ if (window.location.pathname.includes('product.html')) {
     const product = allProducts.find(p => p.id === productId);
     
     if (product) {
-        document.getElementById('productDetailImage').src = product.image;
+        const mainImage = product.images ? product.images[0] : (product.image || 'images/product-sample.jpg');
+        document.getElementById('productDetailImage').src = mainImage;
         document.getElementById('productDetailImage').alt = product.name;
         document.getElementById('productDetailName').textContent = product.name;
         document.getElementById('productDetailCategory').textContent = product.category;
         document.getElementById('productDetailDescription').textContent = product.description;
-        document.getElementById('productDetailPrice').textContent = product.price.toFixed(2) + ' €';
+        document.getElementById('productDetailPrice').textContent = product.price.toFixed(0) + ' CFA';
         document.getElementById('productDetailQuantity').textContent = product.quantity;
         document.getElementById('productDetailLocation').textContent = product.location;
         document.getElementById('productDetailSeller').textContent = product.sellerName;
@@ -364,7 +435,7 @@ function displayCart() {
         
         container.innerHTML = cart.map(item => `
             <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}" onerror="this.src='images/product-sample.jpg'">
+                <img src="${item.images ? item.images[0] : (item.image || 'images/product-sample.jpg')}" alt="${item.name}" onerror="this.src='images/product-sample.jpg'">
                 <div class="cart-item-info">
                     <h3>${item.name}</h3>
                     <p style="color: var(--text-gray);">${item.sellerName}</p>
@@ -376,7 +447,7 @@ function displayCart() {
                         <button onclick="updateQuantity(${item.id}, 1)">+</button>
                     </div>
                     <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary-green);">
-                        ${(item.price * item.quantity).toFixed(2)} €
+                        ${(item.price * item.quantity).toFixed(0)} CFA
                     </div>
                     <button onclick="removeFromCart(${item.id})" class="btn btn-secondary">Supprimer</button>
                 </div>
@@ -412,9 +483,9 @@ function updateCartSummary() {
     const shipping = 5.00;
     const total = subtotal + shipping;
     
-    document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' €';
-    document.getElementById('shipping').textContent = shipping.toFixed(2) + ' €';
-    document.getElementById('total').textContent = total.toFixed(2) + ' €';
+    document.getElementById('subtotal').textContent = subtotal.toFixed(0) + ' CFA';
+    document.getElementById('shipping').textContent = shipping.toFixed(0) + ' CFA';
+    document.getElementById('total').textContent = total.toFixed(0) + ' CFA';
 }
 
 function placeOrder() {
@@ -432,10 +503,40 @@ function placeOrder() {
     orders.push(order);
     localStorage.setItem('orders', JSON.stringify(orders));
     
+    const productsBySeller = {};
+    cart.forEach(item => {
+        if (!productsBySeller[item.sellerId]) {
+            productsBySeller[item.sellerId] = {
+                sellerName: item.sellerName,
+                sellerPhone: item.sellerPhone,
+                products: []
+            };
+        }
+        productsBySeller[item.sellerId].products.push(item);
+    });
+    
+    Object.values(productsBySeller).forEach(seller => {
+        let message = `Bonjour ${seller.sellerName},\n\n`;
+        message += `Je suis ${currentUser.name} et je souhaite commander :\n\n`;
+        
+        seller.products.forEach(product => {
+            message += `• ${product.name} - Quantité: ${product.quantity} - Prix: ${(product.price * product.quantity).toFixed(0)} CFA\n`;
+        });
+        
+        const total = seller.products.reduce((sum, p) => sum + (p.price * p.quantity), 0);
+        message += `\nTotal: ${total.toFixed(0)} CFA\n\n`;
+        message += `Adresse de livraison: ${currentUser.address || currentUser.location}\n`;
+        message += `Téléphone: ${currentUser.phone}\n\n`;
+        message += `Merci de confirmer la disponibilité.`;
+        
+        const whatsappUrl = `https://wa.me/${seller.sellerPhone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    });
+    
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    showToast('Votre commande a été enregistrée avec succès !');
+    showToast('Messages WhatsApp envoyés aux producteurs !');
     setTimeout(() => {
         window.location.href = 'dashboard.html';
     }, 2000);
