@@ -1,0 +1,191 @@
+🧠 PROMPT À COPIER DANS REPLIT
+
+Crée un site web complet et professionnel nommé AgroConnect, uniquement en HTML, CSS et JavaScript, sans frameworks, mais avec un design moderne inspiré de Spotify (même police d’écriture, ambiance haut de gamme et fluide).
+
+Ce site représente une marketplace agroalimentaire connectant producteurs, restaurateurs et consommateurs.
+Il doit comporter plusieurs pages reliées entre elles, un système d’inscription différencié selon le rôle, une logique de simulation (localStorage), et toutes les fonctionnalités d’une vraie plateforme moderne.
+
+🌐 Pages principales
+	•	index.html → page d’accueil
+	•	about.html → à propos
+	•	services.html → nos services
+	•	register.html → inscription selon rôle
+	•	dashboard.html → interface utilisateur après connexion
+	•	product.html → affichage détaillé d’un produit
+	•	cart.html → panier et commande simulée
+
+🏠 1. Page d’accueil (index.html)
+
+Sections à inclure :
+	1.	Hero Section
+	•	Image de fond haute résolution (ferme + produits + marché)
+	•	Grand titre : “AgroConnect – Relions producteurs, restaurateurs et consommateurs.”
+	•	Sous-texte : “La première marketplace qui connecte toute la chaîne agroalimentaire.”
+	•	Boutons : “Découvrir” et “Créer un compte”
+	2.	Section Pourquoi nous choisir
+	•	4 cartes animées :
+	•	🌱 Produits locaux et bio
+	•	⚡ Commandes rapides
+	•	🤝 Confiance garantie
+	•	🚚 Livraison simplifiée
+	3.	Section About (aperçu)
+	•	Court texte sur la mission et la vision d’AgroConnect
+	•	Bouton “En savoir plus” → redirige vers about.html
+	4.	Section Témoignages
+	•	3 témoignages d’utilisateurs (clients, producteurs, restaurateurs)
+	5.	Section FAQ interactive (accordéon)
+	•	“Comment devenir producteur ?”
+	•	“Comment passer commande ?”
+	•	“Puis-je vendre en tant que restaurant ?”
+	•	“Comment fonctionne la livraison ?”
+	6.	Footer
+	•	Liens rapides : Accueil, À propos, Services, Contact
+	•	Réseaux sociaux (Facebook, Instagram, LinkedIn)
+	•	Mentions légales : “© 2025 AgroConnect – Tous droits réservés.”
+
+👤 2. Page À propos (about.html)
+	•	Hero section : grand titre “À propos d’AgroConnect”
+	•	Section à propos détaillée : texte long sur la mission et les valeurs
+	•	Section Vision : intégrée ici (cartes : durabilité, collaboration, innovation)
+	•	Section Statistiques animées :
+	•	+500 producteurs inscrits
+	•	+300 restaurants partenaires
+	•	+2000 commandes
+	•	+25 villes connectées
+	•	Section FAQ
+	•	Footer identique
+
+🧰 3. Page Services (services.html)
+	•	Hero Section : “Nos Services”
+	•	Cartes de services :
+	•	Pour les producteurs
+	•	Pour les restaurateurs
+	•	Pour les clients
+	•	Appel à l’action : “Rejoignez la révolution agroalimentaire”
+	•	Footer
+
+🧩 4. Page d’inscription (register.html)
+
+Formulaire avec sélecteur de rôle :
+	•	👨‍🌾 Producteur
+	•	🍽️ Restaurant
+	•	👤 Client
+
+Selon le rôle sélectionné, afficher un formulaire spécifique :
+
+Producteur :
+	•	Nom complet ou entreprise
+	•	Type de production (fruits, légumes, viande, etc.)
+	•	Localisation
+	•	Email / Téléphone
+	•	Description
+	•	Photo ou logo
+	•	Mot de passe (stocké localement)
+
+Restaurant :
+	•	Nom du restaurant
+	•	Spécialité
+	•	Localisation
+	•	Email / Téléphone
+	•	Description
+	•	Logo / Image
+	•	Mot de passe
+
+Client :
+	•	Nom complet
+	•	Adresse
+	•	Téléphone / Email
+	•	Mot de passe
+
+➜ Sauvegarde dans localStorage avec rôle et infos.
+➜ Redirection vers dashboard.html après validation.
+
+🖥️ 5. Tableau de bord (dashboard.html)
+
+Interface différente selon le rôle :
+
+Producteur / Restaurant :
+	•	Bouton “Publier un produit” → ouvre un formulaire :
+	•	Nom du produit
+	•	Image (upload simulé)
+	•	Description
+	•	Catégorie
+	•	Quantité
+	•	Prix
+	•	Localisation
+	•	Bouton “Publier”
+	•	Liste des produits déjà publiés (affichage dynamique via JS)
+	•	Bouton “Modifier / Supprimer” pour chaque produit (simulation locale)
+
+Client :
+	•	Grille de produits disponibles (cartes visuelles)
+	•	Bouton “Ajouter au panier”
+	•	Barre de recherche + filtres (catégorie, prix, localisation)
+
+🛒 6. Panier et Commande (cart.html)
+	•	Liste des produits ajoutés au panier (nom, prix, quantité, total)
+	•	Boutons :
+	•	“Supprimer du panier”
+	•	“Commander maintenant” (simulation)
+	•	Message de confirmation “Votre commande a été enregistrée avec succès.”
+	•	Stockage des commandes dans localStorage pour historique.
+
+🔒 7. Authentification simulée
+	•	Lors de la connexion, le site vérifie le rôle et redirige vers le bon dashboard.
+	•	Persistance de session via localStorage (nom, rôle, email).
+	•	Bouton “Se déconnecter” réinitialise les données locales.
+
+💬 8. Fonctionnalités dynamiques essentielles
+	•	Barre de navigation sticky + responsive
+	•	Effet “scroll reveal” sur les sections
+	•	FAQ interactive (accordéon JS)
+	•	Compteurs animés pour les statistiques
+	•	Animation au survol des cartes et boutons
+	•	Filtrage dynamique des produits (par nom ou catégorie)
+	•	Stockage local simulé pour :
+	•	Utilisateurs
+	•	Produits publiés
+	•	Commandes
+	•	Panier
+	•	Notifications visuelles (petit toast JS après publication ou commande)
+
+🎨 9. Design global
+	•	Police : Poppins (proche de celle de Spotify)
+	•	Couleurs principales :
+	•	Vert #1DB954
+	•	Gris foncé #121212
+	•	Blanc #FFFFFF
+	•	Boutons arrondis, ombres douces, transitions fluides.
+	•	Fond avec dégradés subtils et images floutées dans le hero.
+	•	Responsive sur mobile et ordinateur.
+
+📁 10. Structure de fichiers attendue
+
+agroconnect/
+├─ index.html
+├─ about.html
+├─ services.html
+├─ register.html
+├─ dashboard.html
+├─ product.html
+├─ cart.html
+├─ style.css
+├─ script.js
+├─ /images/
+│   ├─ hero.jpg
+│   ├─ about.jpg
+│   ├─ product-sample.jpg
+└─ /icons/
+
+🚀 Objectif final
+
+Un site marketplace complet et moderne, fluide, avec :
+	•	Pages reliées et design premium
+	•	Navigation claire
+	•	Système de rôles et d’inscription différencié
+	•	Possibilité de publier et consulter des produits
+	•	Panier et commandes simulées
+	•	Authentification basique (localStorage)
+	•	Interface responsive et agréable
+
+Le code doit être propre, bien commenté et facile à adapter pour une future intégration backend (Node.js ou Firebase)
