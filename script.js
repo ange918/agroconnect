@@ -275,14 +275,28 @@ if (document.getElementById('productForm')) {
         const fileInput = document.getElementById('productImages');
         const files = Array.from(fileInput.files).slice(0, 5);
         
+        // Validation obligatoire : au moins une image doit être importée
         if (files.length === 0) {
+            showToast('Veuillez importer au moins une image avant de continuer.');
+            return;
+        }
+        
+        const imagePromises = files.map(file => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(file);
+            });
+        });
+        
+        Promise.all(imagePromises).then(images => {
             const product = {
                 id: Date.now(),
                 sellerId: currentUser.id,
                 sellerName: currentUser.name,
                 sellerPhone: currentUser.phone,
                 name: document.getElementById('productName').value,
-                images: ['images/product-sample.jpg'],
+                images: images,
                 description: document.getElementById('productDescription').value,
                 category: document.getElementById('productCategory').value,
                 quantity: document.getElementById('productQuantity').value,
@@ -295,37 +309,7 @@ if (document.getElementById('productForm')) {
             showToast('Produit publié avec succès !');
             closeProductModal();
             loadMyProducts();
-        } else {
-            const imagePromises = files.map(file => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.readAsDataURL(file);
-                });
-            });
-            
-            Promise.all(imagePromises).then(images => {
-                const product = {
-                    id: Date.now(),
-                    sellerId: currentUser.id,
-                    sellerName: currentUser.name,
-                    sellerPhone: currentUser.phone,
-                    name: document.getElementById('productName').value,
-                    images: images,
-                    description: document.getElementById('productDescription').value,
-                    category: document.getElementById('productCategory').value,
-                    quantity: document.getElementById('productQuantity').value,
-                    price: parseFloat(document.getElementById('productPrice').value),
-                    location: document.getElementById('productLocation').value
-                };
-                
-                allProducts.push(product);
-                localStorage.setItem('allProducts', JSON.stringify(allProducts));
-                showToast('Produit publié avec succès !');
-                closeProductModal();
-                loadMyProducts();
-            });
-        }
+        });
     });
 }
 
@@ -670,15 +654,33 @@ document.addEventListener('click', function(event) {
 });
 
 // Transitions fade-in/fade-out entre pages
-document.querySelectorAll('a[href]:not([href^="#"]):not([onclick])').forEach(link => {
-    link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href && !href.startsWith('#') && !this.hasAttribute('onclick')) {
+function initPageTransitions() {
+    const links = document.querySelectorAll('a[href]');
+    
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Ne pas ajouter de transition pour les liens avec #, javascript:, mailto:, ou qui ont déjà onclick
+        if (!href || href.startsWith('#') || href.startsWith('javascript:') || 
+            href.startsWith('mailto:') || link.hasAttribute('onclick')) {
+            return;
+        }
+        
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            document.body.classList.add('page-transition');
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease-out';
+            
             setTimeout(() => {
                 window.location.href = href;
             }, 300);
-        }
+        });
     });
-});
+}
+
+// Initialiser les transitions au chargement
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPageTransitions);
+} else {
+    initPageTransitions();
+}
