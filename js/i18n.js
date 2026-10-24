@@ -48,6 +48,7 @@ window.MAFOYA_I18N = {
     f_find: "Nous trouver", f_find_p: "Adresse commerciale à confirmer.", f_contacts: "Contacts", f_collab: "Collaborations", f_support: "Service client",
     journal_t: "MAFOYA Journal", journal_p: "Silhouettes, tissus et nouveaux récits.", journal_ph: "E-mail", journal_off: "Inscription bientôt disponible.",
     f_line: "Commande en ligne ou via WhatsApp · Livraison Bénin et international", f_house: "MAFOYA — maison de mode, Bénin.", f_lang: "Langue",
+    acc_desc: "Description", acc_ship: "Livraison et retours", acc_mat: "Matière et entretien", acc_mat_p: "Matière, technique et conseils d'entretien : à confirmer par la marque.", acc_ship_p: "Pays desservis, tarifs, délais et politique de retour précisés avant la commande.", you_may_like: "Vous aimerez aussi", qty_minus: "Diminuer", qty_plus: "Augmenter", continue_shop: "Continuer mes achats", order_t: "Finaliser la commande",
     footer_rights: "Tous droits réservés.", footer_note: "Maquette — catalogue, prix et coordonnées fictifs en attente de validation.",
   },
   en: {
@@ -99,6 +100,7 @@ window.MAFOYA_I18N = {
     f_find: "Find us", f_find_p: "Business address to be confirmed.", f_contacts: "Contacts", f_collab: "Collaborations", f_support: "Customer service",
     journal_t: "MAFOYA Journal", journal_p: "Silhouettes, fabrics and new stories.", journal_ph: "Email", journal_off: "Sign-up coming soon.",
     f_line: "Order online or via WhatsApp · Delivery in Benin and worldwide", f_house: "MAFOYA — fashion house, Benin.", f_lang: "Language",
+    acc_desc: "Description", acc_ship: "Delivery and returns", acc_mat: "Material and care", acc_mat_p: "Material, technique and care advice: to be confirmed by the brand.", acc_ship_p: "Served countries, rates, lead times and returns policy specified before ordering.", you_may_like: "You may also like", qty_minus: "Decrease", qty_plus: "Increase", continue_shop: "Continue shopping", order_t: "Complete your order",
     footer_rights: "All rights reserved.", footer_note: "Mockup — catalogue, prices and contact details are placeholders pending validation.",
   },
 };

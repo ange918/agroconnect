@@ -104,27 +104,36 @@
       if (!p) return views.shop();
       const s = statusOf(p), can = s === "available", fab = p.type === "fabric";
       const back = fab ? `#/fabrics/${p.family}` : `#/shop/${p.cat}`;
+      const stepper = (min, step, max) => `<div class="stepper"><button type="button" data-step="-${step}" aria-label="${t("qty_minus")}">−</button>
+        <input type="number" id="qty" min="${min}" step="${step}" max="${max}" value="${min}" aria-label="${t(fab ? "length" : "qty")}">
+        <button type="button" data-step="${step}" aria-label="${t("qty_plus")}">+</button></div>`;
       let opts;
       if (fab) {
-        opts = `<p class="muted">${t("color")} : ${esc(p.color)}${p.width ? " · " + t("width") + " : " + esc(p.width) : ""}</p>
-          <p class="muted">${t("min_length")} : ${num(p.min)} ${t("meters")}</p>
-          <label>${t("length")} (${t("meters")})<input type="number" id="qty" min="${p.min}" step="${p.step}" value="${p.min}" max="${p.stock}"></label>
+        opts = `<p class="opt-label">${t("color")} : <span>${esc(p.color)}</span>${p.width ? " · " + t("width") + " : " + esc(p.width) : ""}</p>
+          <p class="opt-label">${t("length")} (${t("meters")}) · ${t("min_length")} ${num(p.min)} ${t("meters")}</p>${stepper(p.min, p.step, p.stock)}
           <p class="muted small">${t("batch_note")}</p>`;
       } else {
-        const sizes = Object.entries(p.sizes).map(([k, v]) => `<option value="${k}" ${v <= 0 ? "disabled" : ""}>${k}${v <= 0 ? " — " + t("soldout") : ""}</option>`).join("");
-        opts = `<label>${t("color")}<select id="color">${p.colors.map((c) => `<option>${esc(c)}</option>`).join("")}</select></label>
-          <label>${t("size")}<select id="size"><option value="">${t("select_size")}</option>${sizes}</select></label>
-          <label>${t("qty")}<input type="number" id="qty" min="1" step="1" value="1"></label>`;
+        const colors = p.colors.map((c, i) => `<label class="pill"><input type="radio" name="color" value="${esc(c)}" ${i === 0 ? "checked" : ""}><span>${esc(c)}</span></label>`).join("");
+        const sizes = Object.entries(p.sizes).map(([k, v]) => `<label class="pill ${v <= 0 ? "off" : ""}"><input type="radio" name="size" value="${k}" ${v <= 0 ? "disabled" : ""}><span>${k}</span></label>`).join("");
+        opts = `<p class="opt-label">${t("color")}</p><div class="pills">${colors}</div>
+          <p class="opt-label">${t("size")}</p><div class="pills" id="sizes">${sizes}</div>
+          <p class="opt-label">${t("qty")}</p>${stepper(1, 1, 99)}`;
       }
-      return `<section class="section product"><a class="back" href="${back}">← ${t("back")}</a>
-        <div class="product-grid"><div class="product-visual">${visual(p)}</div>
-        <div><h1>${esc(L(p.name))}</h1><p class="price big">${money(p.price)}${fab ? " " + t("per_meter") : ""}</p>
+      const others = DATA.products.filter((o) => o.id !== p.id && o.type === p.type).slice(0, 4).map(card).join("");
+      return `<section class="block product"><nav class="crumbs"><a href="#/">${t("nav_home")}</a> / <a href="${back}">${t(fab ? "nav_fabrics" : "nav_shop")}</a></nav>
+        <div class="product-grid"><div class="product-visual">${slot("", p.pattern, "tall", L(p.name))}</div>
+        <div class="product-info"><p class="sku">${p.sku}</p><h1>${esc(L(p.name))}</h1>
+          <p class="price big">${money(p.price)}${fab ? " " + t("per_meter") : ""}</p>
           <p>${badge(p) || `<span class="badge available">${t("available")}</span>`}</p>
-          <p>${esc(L(p.desc))}</p><p class="muted small">${t("sku")} ${p.sku}</p>
           <form id="buy" data-id="${p.id}">${opts}
-            <div class="actions"><button class="btn" data-act="add" ${can ? "" : "disabled"}>${t("add_cart")}</button>
-            <button class="btn wa" data-act="wa" ${can ? "" : "disabled"}>${t("order_wa")}</button></div></form>
-          <p class="muted small">${t("delivery_info")}</p></div></div></section>`;
+            <div class="buy-actions"><button class="btn block-btn" data-act="add" ${can ? "" : "disabled"}>${t("add_cart")}</button>
+            <button class="btn wa block-btn" data-act="wa" ${can ? "" : "disabled"}>${t("order_wa")}</button></div></form>
+          <div class="accordion">
+            <details open><summary>${t("acc_desc")}</summary><p>${esc(L(p.desc))}</p></details>
+            <details><summary>${t("acc_mat")}</summary><p>${t("acc_mat_p")}</p></details>
+            <details><summary>${t("acc_ship")}</summary><p>${t("acc_ship_p")}</p></details>
+          </div></div></div>
+        ${others ? `<h2 class="big">${t("you_may_like")}</h2><div class="grid">${others}</div>` : ""}</section>`;
     },
     story() {
       return `<section class="section narrow"><h1>${t("story_title")}</h1><p>${t("story_p1")}</p><p>${t("story_p2")}</p><p class="quote">${t("story_p3")}</p></section>`;
@@ -140,16 +149,21 @@
       return `<section class="section narrow"><h1>${t("legal_title")}</h1><p>${t("legal_text")}</p><ul>${t("legal_links").map((l) => `<li>${l}</li>`).join("")}</ul></section>`;
     },
     cart() {
-      if (!cart.length) return `<section class="section narrow"><h1>${t("cart_title")}</h1><p class="muted">${t("cart_empty")}</p><a class="btn" href="#/shop">${t("hero_cta")}</a></section>`;
+      if (!cart.length) return `<section class="block empty-cart"><h1>${t("cart_title")}</h1><p>${t("cart_empty")}</p><a class="btn" href="#/shop">${t("continue_shop")}</a></section>`;
       const rows = cart.map((it, i) => {
         const p = byId(it.id), fab = p.type === "fabric";
-        const meta = fab ? `${num(it.qty)} ${t("meters")}` : `${esc(it.color)} · ${it.size} · ×${it.qty}`;
-        return `<li class="line"><div class="line-visual">${visual(p)}</div><div class="line-info"><strong>${esc(L(p.name))}</strong><span class="muted">${meta}</span></div>
-          <div class="line-price">${money(p.price * it.qty)}<button class="link" data-remove="${i}">${t("remove")}</button></div></li>`;
+        const meta = fab ? `${esc(p.color)}` : `${esc(it.color)} · ${it.size}`;
+        const step = fab ? p.step : 1;
+        return `<li class="line"><div class="line-visual">${slot("", p.pattern, "tall", L(p.name))}</div>
+          <div class="line-info"><a href="#/product/${p.id}">${esc(L(p.name))}</a><span class="muted small">${meta}</span><span class="muted small">${money(p.price)}${fab ? " " + t("per_meter") : ""}</span>
+            <div class="line-ctrl"><div class="stepper sm"><button type="button" data-cart-step="${i}" data-d="-${step}" aria-label="${t("qty_minus")}">−</button><span>${num(it.qty)}${fab ? " " + t("meters") : ""}</span><button type="button" data-cart-step="${i}" data-d="${step}" aria-label="${t("qty_plus")}">+</button></div>
+            <button class="link" data-remove="${i}">${t("remove")}</button></div></div>
+          <div class="line-price">${money(p.price * it.qty)}</div></li>`;
       }).join("");
-      return `<section class="section narrow"><h1>${t("cart_title")}</h1><ul class="lines">${rows}</ul>
-        <div class="totals"><div><span>${t("subtotal")}</span><strong>${money(cartTotal())}</strong></div><div class="muted"><span>${t("shipping")}</span><span>${t("shipping_tbd")}</span></div></div>
-        <h2>${t("checkout")}</h2>
+      return `<section class="block cart-page"><div class="section-head"><h1>${t("cart_title")}</h1><a href="#/shop">${t("continue_shop")}</a></div>
+        <ul class="lines">${rows}</ul>
+        <div class="totals"><div class="total-row"><span>${t("subtotal")}</span><strong>${money(cartTotal())}</strong></div><p class="muted small">${t("shipping")} : ${t("shipping_tbd")}</p></div>
+        <h2 class="big">${t("order_t")}</h2>
         <form id="checkout" class="form">
           <label>${t("f_name")}<input name="name" required autocomplete="name"></label>
           <label>${t("f_phone")}<input name="phone" type="tel" required autocomplete="tel"></label>
@@ -157,8 +171,8 @@
           <label>${t("f_country")}<input name="country" autocomplete="country-name"></label>
           <label>${t("f_address")}<textarea name="address" rows="2" required></textarea></label>
           <label>${t("f_note")}<textarea name="note" rows="2"></textarea></label>
-          <div class="actions"><button type="button" class="btn" disabled="${CFG.onlinePaymentEnabled ? "" : "disabled"}" ${CFG.onlinePaymentEnabled ? "" : "disabled"}>${CFG.onlinePaymentEnabled ? t("pay_online") : t("pay_online_off")}</button>
-          <button type="submit" class="btn wa">${t("pay_wa")}</button></div>
+          <div class="buy-actions"><button type="button" class="btn block-btn" ${CFG.onlinePaymentEnabled ? "" : "disabled"}>${CFG.onlinePaymentEnabled ? t("pay_online") : t("pay_online_off")}</button>
+          <button type="submit" class="btn wa block-btn">${t("pay_wa")}</button></div>
         </form></section>`;
     },
   };
@@ -177,10 +191,11 @@
       if (qty < p.min || qty > p.stock || Math.abs((qty / p.step) - Math.round(qty / p.step)) > 1e-9) { $("#qty", form).reportValidity(); return null; }
       return { id: p.id, qty };
     }
-    const size = $("#size", form).value;
-    if (!size) { $("#size", form).focus(); toast(t("select_size")); return null; }
+    const sel = form.querySelector("input[name=size]:checked");
+    const size = sel && sel.value;
+    if (!size) { $("#sizes", form).classList.add("shake"); setTimeout(() => $("#sizes", form).classList.remove("shake"), 500); toast(t("select_size")); return null; }
     if (qty > p.sizes[size] || !Number.isInteger(qty)) { toast(t("low_stock")); return null; }
-    return { id: p.id, qty, size, color: $("#color", form).value };
+    return { id: p.id, qty, size, color: form.querySelector("input[name=color]:checked").value };
   }
   function lineText(it) {
     const p = byId(it.id);
@@ -240,6 +255,19 @@
   }
 
   document.addEventListener("click", (e) => {
+    const st = e.target.closest("[data-step]");
+    if (st) {
+      const i = $("#qty", st.closest("form")), step = parseFloat(st.dataset.step), min = parseFloat(i.min);
+      const v = Math.round((parseFloat(i.value || min) + step) * 100) / 100;
+      i.value = Math.min(parseFloat(i.max), Math.max(min, v)); return;
+    }
+    const cs = e.target.closest("[data-cart-step]");
+    if (cs) {
+      const it = cart[+cs.dataset.cartStep], p = byId(it.id), d = parseFloat(cs.dataset.d);
+      const min = p.type === "fabric" ? p.min : 1, max = p.type === "fabric" ? p.stock : p.sizes[it.size];
+      it.qty = Math.min(max, Math.max(min, Math.round((it.qty + d) * 100) / 100));
+      saveCart(); route(); return;
+    }
     const rm = e.target.closest("[data-remove]");
     if (rm) { cart.splice(+rm.dataset.remove, 1); saveCart(); route(); return; }
     const act = e.target.closest("[data-act]");

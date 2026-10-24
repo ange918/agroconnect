@@ -142,3 +142,47 @@ h2.big { font-family: var(--sans); font-weight: 400; font-size: 2.6rem; line-hei
   .story .slot { grid-row: 1 / span 4; margin: 0; }
   .story .btn { justify-self: start; }
 }
+
+/* ---- Fiche produit & panier ---- */
+.crumbs { font-size: .85rem; opacity: .7; margin-bottom: 16px; text-transform: uppercase; letter-spacing: .06em; }
+.crumbs a { text-decoration: none; }
+.product-grid { display: grid; gap: 28px; }
+.product-visual .slot { width: 100%; }
+.product-info h1 { font-family: var(--sans); font-weight: 400; font-size: 2rem; text-transform: uppercase; letter-spacing: .04em; margin: 4px 0 8px; }
+.sku { margin: 0; font-size: .8rem; opacity: .6; text-transform: uppercase; letter-spacing: .1em; }
+.opt-label { margin: 20px 0 8px; font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; }
+.pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill { position: relative; margin: 0; }
+.pill input { position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px; padding: 0; }
+.pill span { display: inline-block; min-width: 52px; text-align: center; padding: 12px 18px; border: 1px solid var(--brown); border-radius: 999px; cursor: pointer; font-size: 1rem; }
+.pill input:checked + span { background: var(--brown); color: #fff; }
+.pill input:focus-visible + span { outline: 2px solid var(--terracotta); outline-offset: 2px; }
+.pill.off span { opacity: .35; text-decoration: line-through; cursor: not-allowed; }
+.shake { animation: shake .4s; } @keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--brown); }
+.stepper button { width: 46px; height: 48px; background: none; border: 0; font-size: 1.3rem; cursor: pointer; color: inherit; font-family: var(--sans); }
+.stepper input { width: 70px; border: 0; text-align: center; background: transparent; padding: 0; -moz-appearance: textfield; }
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.stepper.sm button { width: 34px; height: 34px; } .stepper.sm span { min-width: 54px; text-align: center; font-size: .95rem; }
+.buy-actions { display: grid; gap: 12px; margin: 24px 0; }
+.block-btn { width: 100%; padding: 18px; font-size: 1.05rem; text-align: center; }
+.accordion details { border-top: 1px solid #e6e1d8; padding: 14px 0; } .accordion details:last-child { border-bottom: 1px solid #e6e1d8; }
+.accordion summary { font-size: 1.05rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 400; }
+.accordion p { opacity: .8; line-height: 1.8; margin: 10px 0 0; }
+.cart-page .lines, .empty-cart { max-width: 760px; margin-left: auto; margin-right: auto; }
+.cart-page { max-width: 760px; }
+.empty-cart { text-align: center; padding: 80px var(--gutter); }
+.cart-page h1, .empty-cart h1 { font-family: var(--sans); font-weight: 400; font-size: 2rem; text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+.line { display: grid; grid-template-columns: 84px 1fr auto; gap: 16px; padding: 20px 0; border-bottom: 1px solid #e6e1d8; align-items: start; }
+.line-visual { width: 84px; height: auto; }
+.line-info { display: flex; flex-direction: column; gap: 2px; }
+.line-info > a { text-decoration: none; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .04em; }
+.line-ctrl { display: flex; align-items: center; gap: 16px; margin-top: 10px; }
+.total-row { display: flex; justify-content: space-between; font-size: 1.3rem; text-transform: uppercase; letter-spacing: .06em; }
+.totals { margin: 20px 0 8px; }
+.form label { text-transform: uppercase; letter-spacing: .06em; font-size: .8rem; }
+.form input, .form textarea { border-color: #bbb; border-radius: 0; text-transform: none; }
+@media (min-width: 760px) { .product-grid { grid-template-columns: 1.1fr 1fr; gap: 56px; } .buy-actions { grid-template-columns: 1fr; } }
+/* Cartes produit : même rendu que la grille de référence */
+.card-visual { aspect-ratio: 4/5; background: #efece6; }
+.card h3 { font-family: var(--sans); font-weight: 400; text-transform: uppercase; letter-spacing: .05em; font-size: 1.05rem; margin: 10px 0 2px; }
