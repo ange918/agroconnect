@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAFOYA — N'aie pas peur.</title>
+  <meta name="description" content="MAFOYA : mode, tissus teints à la main et pagnes tissés kanvo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <button class="icon-btn burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+    <a class="brand" href="#/" aria-label="MAFOYA">
+      <span class="brand-name">MAFOYA</span>
+      <span class="brand-tag" data-i18n="tagline"></span>
+    </a>
+    <nav class="nav" id="nav"></nav>
+    <div class="header-actions">
+      <button class="lang-btn" id="lang" aria-label="Langue / Language">FR</button>
+      <a class="icon-btn cart-link" href="#/cart" aria-label="Panier">🛍<span class="cart-count" id="cart-count">0</span></a>
+    </div>
+  </header>
+  <main id="app" tabindex="-1"></main>
+  <footer class="site-footer">
+    <div class="brand-name">MAFOYA</div>
+    <p class="brand-tag" data-i18n="tagline"></p>
+    <p class="muted"><a href="#/legal" id="footer-legal"></a></p>
+    <p class="muted small" id="footer-note"></p>
+    <p class="muted small">© <span id="year"></span> MAFOYA</p>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
