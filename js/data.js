@@ -1,5 +1,8 @@
 // Catalogue d'exemple : produits fictifs servant de maquette. À remplacer par le catalogue validé par MAFOYA.
 window.MAFOYA_DATA = {
+  // Photos : déposer les fichiers dans images/ et renseigner les chemins (ex. "images/hero.jpg").
+  // Tant qu'un chemin est vide, un motif de substitution est affiché.
+  images: { hero: "", homme: "", femme: "", teint: "", kanvo: "", story: "", creator: "" },
   categories: [
     { id: "homme", fr: "Homme", en: "Men" },
     { id: "femme", fr: "Femme", en: "Women" },

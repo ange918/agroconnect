@@ -26,6 +26,16 @@
     const low = s === "available" && p.type === "garment" && totalStock(p) <= 3;
     return s === "available" && !low ? "" : `<span class="badge ${s}">${t(low ? "low_stock" : s)}</span>`;
   }
+  const IMG = DATA.images || {};
+  function slot(key, pattern, cls, label) {
+    const inner = IMG[key] ? `<img src="${esc(IMG[key])}" alt="${esc(label || "")}" loading="lazy">` : `<div class="swatch ${pattern}" role="img" aria-label="${esc(label || "")}"></div>`;
+    return `<div class="slot ${cls || ""}">${inner}</div>`;
+  }
+  const ICONS = {
+    card: '<svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><rect x="6" y="10" width="108" height="62" rx="8"/><path d="M22 36h22M22 50h30M84 36h12"/><rect x="62" y="56" width="40" height="30" rx="6" fill="var(--bg)"/><path d="M70 56V46a12 12 0 0 1 24 0v10"/></svg>',
+    thread: '<svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M10 80 70 20l14 14-60 60-14-14Z" transform="translate(6 -6)"/><path d="M80 24l16-16 16 16-16 16"/><path d="M30 70l16 16M50 50l16 16"/></svg>',
+    box: '<svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><path d="M60 8 14 28v48l46 18 46-18V28L60 8Z"/><path d="M14 28l46 18 46-18M60 46v48"/><circle cx="92" cy="76" r="20" fill="var(--bg)"/><path d="m82 76 7 7 12-14"/></svg>',
+  };
   function visual(p) { return `<div class="swatch ${p.pattern}" role="img" aria-label="${esc(L(p.name))}"></div>`; }
   function card(p) {
     const unit = p.type === "fabric" ? " " + t("per_meter") : "";
@@ -37,17 +47,27 @@
   /* ---------- Vues ---------- */
   const views = {
     home() {
-      const cats = DATA.categories.map((c, i) => `<a class="cat-tile ${["batik-indigo", "terracotta"][i % 2]}" href="#/shop/${c.id}"><span>${L(c)}</span></a>`).join("");
-      const fams = DATA.fabricFamilies.map((f, i) => `<a class="cat-tile ${["batik-indigo", "kanvo", "olive"][i % 3]}" href="#/fabrics/${f.id}"><span>${L(f)}</span></a>`).join("");
+      const tiles = [
+        ["homme", "#/shop/homme", t("cat_men"), "batik-indigo"], ["femme", "#/shop/femme", t("cat_women"), "terracotta"],
+        ["teint", "#/fabrics/teint", L(DATA.fabricFamilies[0]), "batik-indigo"], ["kanvo", "#/fabrics/kanvo", L(DATA.fabricFamilies[1]), "kanvo"],
+      ].map(([k, h, label, pat]) => `<a class="cat-card" href="${h}">${slot(k, pat, "tall", label)}<span>${label}</span></a>`).join("");
       const news = DATA.products.filter((p) => p.collection === "nouveautes").map(card).join("");
-      return `<section class="hero"><div class="hero-inner">
-          <h1>${t("hero_title")}</h1><p>${t("hero_text")}</p>
-          <div class="hero-cta"><a class="btn" href="#/shop">${t("hero_cta")}</a><a class="btn ghost" href="#/fabrics">${t("hero_cta2")}</a></div>
-        </div></section>
-        <section class="section"><h2>${t("home_categories")}</h2><div class="tiles">${cats}</div></section>
-        <section class="section"><div class="section-head"><h2>${t("home_new")}</h2><a href="#/shop">${t("see_all")}</a></div><div class="grid">${news}</div></section>
-        <section class="section"><h2>${t("home_materials")}</h2><div class="tiles three">${fams}</div></section>
-        <section class="section story-band"><h2>${t("home_story")}</h2><p>${t("home_story_text")}</p><a class="btn" href="#/story">${t("read_story")}</a></section>`;
+      const reassure = [["card", "re1"], ["thread", "re2"], ["box", "re3"]].map(([i, k]) => `<div class="reassure"><div class="r-icon">${ICONS[i]}</div><h3>${t(k + "_t")}</h3><p>${t(k + "_p")}</p></div>`).join("");
+      const values = t("values").map(([h, p]) => `<div class="value"><h3>${h}</h3><p>${p}</p></div>`).join("");
+      return `<a href="#/shop" class="hero-link" aria-label="${t("hero_cta")}">${slot("hero", "batik-indigo", "hero", "MAFOYA")}</a>
+        <section class="block"><div class="cat-grid">${tiles}</div></section>
+        <section class="block"><div class="section-head"><h2>${t("home_new")}</h2><a href="#/collections">${t("see_all")}</a></div><div class="grid">${news}</div></section>
+        <section class="block reassure-block">${reassure}</section>
+        <section class="block story">${slot("story", "kanvo", "wide", t("story_home_t"))}
+          <h2 class="big">${t("story_home_t")}</h2><p>${t("home_story_text")}</p><a class="btn" href="#/story">${t("read_story")}</a></section>
+        <section class="block vision"><h2 class="big">${t("vision_t")}</h2><p class="lead">${t("vision_p")}</p><div class="values">${values}</div></section>
+        <section class="block story">${slot("creator", "terracotta", "wide", t("creator_name"))}
+          <h2 class="big">${t("creator_t")}</h2><p>${t("creator_name")}</p><a class="btn" href="#/creator">${t("creator_cta")}</a></section>`;
+    },
+    creator() {
+      return `<section class="section narrow"><h1>${t("creator_t")}</h1>${slot("creator", "terracotta", "tall portrait", t("creator_name"))}
+        <h2>${t("creator_name")}</h2><p>${t("creator_p")}</p><p class="muted small">${t("creator_todo")}</p>
+        <p class="quote">${t("story_p3")}</p><a class="btn" href="#/story">${t("read_story")}</a></section>`;
     },
     shop(cat, qs) {
       const q = (qs.get("q") || "").toLowerCase(), sort = qs.get("sort") || "";
@@ -174,17 +194,37 @@
   }
 
   /* ---------- Routeur & rendu ---------- */
+  function renderFooter() {
+    const wa = `https://wa.me/${CFG.whatsappNumber}`;
+    $("#footer").innerHTML = `<div class="foot-inner">
+      <div class="brand-name">MAFOYA</div><p class="brand-tag">${t("tagline")}</p>
+      <h3>${t("f_find")}</h3><p>${t("f_find_p")}</p>
+      <h3>${t("f_contacts")}</h3>
+      <p>💬 <a href="${wa}" target="_blank" rel="noopener">WhatsApp</a></p>
+      <p>✉ <a href="mailto:${CFG.email}">${CFG.email}</a></p>
+      <p class="muted small">${t("f_collab")} : ${CFG.email}</p>
+      <h3>${t("journal_t")}</h3><p class="muted">${t("journal_p")}</p>
+      <form class="journal" id="journal"><input type="email" placeholder="${t("journal_ph")}" aria-label="${t("journal_ph")}" required><button aria-label="OK">→</button></form>
+      <p class="muted small"><a href="#/legal">${t("legal_title")}</a> · <a href="#/faq">${t("nav_faq")}</a></p></div>
+      <div class="foot-line"><p>${t("f_line")}</p><p>${t("f_house")}</p>
+      <label class="lang-select"><span>${t("f_lang")}</span><select id="lang-footer" aria-label="${t("f_lang")}"><option value="fr" ${lang === "fr" ? "selected" : ""}>Français</option><option value="en" ${lang === "en" ? "selected" : ""}>English</option></select></label>
+      <p class="muted small">${t("footer_note")}</p><p class="muted small">© ${new Date().getFullYear()} MAFOYA</p></div>`;
+  }
   function renderChrome() {
     document.documentElement.lang = lang;
     document.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = t(el.dataset.i18n)));
-    $("#lang").textContent = lang === "fr" ? "EN" : "FR";
-    $("#footer-legal").textContent = t("legal_title");
-    $("#footer-note").textContent = t("footer_note");
-    $("#year").textContent = new Date().getFullYear();
-    const links = [["", "nav_home"], ["shop", "nav_shop"], ["fabrics", "nav_fabrics"], ["collections", "nav_collections"], ["story", "nav_story"], ["faq", "nav_faq"]];
+    $("#lang-drawer").value = lang; $("#drawer-lang-label").textContent = t("f_lang");
+    $("#search-link").setAttribute("aria-label", t("search_label"));
+    $("#fab").href = `https://wa.me/${CFG.whatsappNumber}`;
+    const links = [["", "nav_home"], ["shop", "nav_shop"], ["fabrics", "nav_fabrics"], ["collections", "nav_collections"], ["story", "nav_story"], ["creator", "nav_creator"], ["faq", "nav_faq"]];
     const cur = (location.hash.replace(/^#\/?/, "").split(/[/?]/)[0]) || "";
     $("#nav").innerHTML = links.map(([h, k]) => `<a href="#/${h}" class="${cur === h ? "on" : ""}">${t(k)}</a>`).join("");
     $("#cart-count").textContent = cartCount();
+    renderFooter();
+  }
+  function setDrawer(open) {
+    $("#drawer").classList.toggle("open", open); $("#overlay").classList.toggle("open", open);
+    $("#burger").setAttribute("aria-expanded", open);
   }
   function route() {
     const [path, query] = location.hash.replace(/^#\/?/, "").split("?");
@@ -194,8 +234,9 @@
     app.innerHTML = view(arg, qs);
     document.title = "MAFOYA — " + t("tagline");
     renderChrome();
-    $("#nav").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false");
+    setDrawer(false);
     window.scrollTo(0, 0);
+    if (qs.get("focus")) { const i = $("input[name=q]"); if (i) i.focus(); }
   }
 
   document.addEventListener("click", (e) => {
@@ -220,6 +261,8 @@
       if (!g("name") || !g("phone") || !g("address")) { toast(t("fill_required")); return; }
       const customer = [g("name"), g("phone"), g("email"), g("country"), g("address"), g("note")].filter(Boolean).join("\n");
       openWhatsApp(cart.map(lineText), cartTotal(), customer);
+    } else if (e.target.id === "journal") {
+      e.preventDefault(); toast(t("journal_off"));
     } else if (e.target.dataset.filterForm !== undefined) {
       e.preventDefault();
     }
@@ -233,8 +276,12 @@
     location.hash = f.dataset.base.slice(1) + (p.toString() ? "?" + p : "");
     if (focusSearch) { const i = $("input[name=q]"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
   });
-  $("#lang").addEventListener("click", () => { lang = lang === "fr" ? "en" : "fr"; store.set("mafoya_lang", lang); route(); });
-  $("#burger").addEventListener("click", () => { const n = $("#nav"); const o = n.classList.toggle("open"); $("#burger").setAttribute("aria-expanded", o); });
+  function setLang(v) { lang = v; store.set("mafoya_lang", lang); route(); }
+  $("#lang-drawer").addEventListener("change", (e) => setLang(e.target.value));
+  document.addEventListener("change", (e) => { if (e.target.id === "lang-footer") setLang(e.target.value); });
+  $("#burger").addEventListener("click", () => setDrawer(true));
+  $("#drawer-close").addEventListener("click", () => setDrawer(false));
+  $("#overlay").addEventListener("click", () => setDrawer(false));
   window.addEventListener("hashchange", route);
   route();
 })();

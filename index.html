@@ -7,30 +7,39 @@
   <meta name="description" content="MAFOYA : mode, tissus teints à la main et pagnes tissés kanvo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="site-header">
-    <button class="icon-btn burger" id="burger" aria-label="Menu" aria-expanded="false">☰</button>
+    <button class="icon-btn" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
     <a class="brand" href="#/" aria-label="MAFOYA">
       <span class="brand-name">MAFOYA</span>
       <span class="brand-tag" data-i18n="tagline"></span>
     </a>
-    <nav class="nav" id="nav"></nav>
     <div class="header-actions">
-      <button class="lang-btn" id="lang" aria-label="Langue / Language">FR</button>
-      <a class="icon-btn cart-link" href="#/cart" aria-label="Panier">🛍<span class="cart-count" id="cart-count">0</span></a>
+      <a class="icon-btn" href="#/shop?focus=1" id="search-link" aria-label="Rechercher">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      </a>
+      <a class="icon-btn cart-link" href="#/cart" aria-label="Panier">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </a>
     </div>
   </header>
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Menu">
+    <button class="icon-btn close" id="drawer-close" aria-label="Fermer">✕</button>
+    <nav class="nav" id="nav"></nav>
+    <label class="lang-select"><span id="drawer-lang-label"></span><select id="lang-drawer" aria-label="Langue"><option value="fr">Français</option><option value="en">English</option></select></label>
+  </aside>
   <main id="app" tabindex="-1"></main>
-  <footer class="site-footer">
-    <div class="brand-name">MAFOYA</div>
-    <p class="brand-tag" data-i18n="tagline"></p>
-    <p class="muted"><a href="#/legal" id="footer-legal"></a></p>
-    <p class="muted small" id="footer-note"></p>
-    <p class="muted small">© <span id="year"></span> MAFOYA</p>
-  </footer>
+  <footer class="site-footer" id="footer"></footer>
+  <a class="fab" id="fab" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 18.8L4 20Z"/></svg>
+  </a>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="js/config.js"></script>
   <script src="js/data.js"></script>
